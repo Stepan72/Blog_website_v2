@@ -1,0 +1,19 @@
+<%- include('partials/header') -%>
+
+<div class="main">
+  <h1>Hello</h1>
+  <p><%= homeStartingContentEJS %></p>
+  <% postsEJS.forEach(el => { %>
+  <h2><%= el.title %></h2>
+
+  <% if (el.content.length>20) { %>
+  <p>
+    <%=el.content.slice(0,340) %>
+    <a href="/posts/<%=el.title%>">...more</a>
+  </p>
+
+  <% } else { %>
+  <p><%= el.content %></p>
+  <% } %> <% }) %>
+</div>
+<%- include('partials/footer') -%>
