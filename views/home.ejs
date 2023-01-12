@@ -6,14 +6,14 @@
   <% postsEJS.forEach(el => { %>
   <h2><%= el.title %></h2>
 
-  <% if (el.content.length>20) { %>
+  <% if (el.postContent.length>20) { %>
   <p>
     <%=el.content.slice(0,340) %>
     <a href="/posts/<%=el.title%>">...more</a>
   </p>
 
   <% } else { %>
-  <p><%= el.content %></p>
+  <p><%= el.postContent %></p>
   <% } %> <% }) %>
 </div>
 <%- include('partials/footer') -%>

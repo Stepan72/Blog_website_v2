@@ -26,17 +26,14 @@ const postsSchema = new mongoose.Schema({
     type: String,
     required: [true, "Add title"],
   },
-  post: {
+  postContent: {
     type: String,
     required: [true, "Add post"],
   },
 });
 const Post = mongoose.model("Post", postsSchema);
 
-const homePost = new Post({
-  title: "Home",
-  post: "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.",
-});
+//// ==================
 
 const homeStartingContent =
   "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -49,9 +46,14 @@ const posts = [];
 let postShow;
 
 app.get("/", function (req, res) {
-  res.render("home", {
-    homeStartingContentEJS: homeStartingContent,
-    postsEJS: posts,
+  Post.find({}, (err, results) => {
+    if (!err) {
+      console.log(results);
+      res.render("home", {
+        homeStartingContentEJS: homeStartingContent,
+        postsEJS: results,
+      });
+    }
   });
 });
 
@@ -71,12 +73,26 @@ app.get("/compose", function (req, res) {
   res.render("compose");
 });
 
+// app.post("/compose", function (req, res) {
+//   const postMessage = {
+//     title: req.body.title,
+//     content: req.body.post,
+//   };
+//   posts.push(postMessage);
+//   res.redirect("/");
+// });
+/// Внесение нового поста в dB
 app.post("/compose", function (req, res) {
-  const postMessage = {
+  const post = new Post({
     title: req.body.title,
-    content: req.body.post,
-  };
-  posts.push(postMessage);
+    postContent: req.body.post,
+  });
+
+  Post.insertMany(post, (err, results) => {
+    if (!err) {
+      console.log(results);
+    }
+  });
   res.redirect("/");
 });
 
