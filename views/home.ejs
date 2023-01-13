@@ -3,19 +3,36 @@
 <div class="main">
   <h1>Hello</h1>
   <p><%= homeStartingContentEJS %></p>
-  <% postsEJS.forEach(el => { %>
-  <h2>
-    <%= `${el.title[0].toUpperCase()}${el.title.slice(1,el.title.length)}` %>
-  </h2>
+  <div class="container">
+    <% postsEJS.forEach(el => { %>
 
-  <% if (el.postContent.length>20) { %>
-  <p>
-    <%=el.content.slice(0,340) %>
-    <a href="/posts/<%=el.title%>">...more</a>
-  </p>
+    <div class="col-md-10">
+      <h2 class="h2-title">
+        <%= `${el.title[0].toUpperCase()}${el.title.slice(1,el.title.length)}`
+        %>
+      </h2>
+      <% if (el.postContent.length>20) { %>
+        <p>
+          <%=el.postContent.slice(0,340) %>
+          <a href="/<%=el.title%>">...more</a>
+        </p>
+    </div>
+    <div class="col-md-1 text-right">
+      <button class="btn btn-secondary" type="submit">Delete post</button>
+    </div>
+    <% } else { %>
+      <p><%= el.postContent %></p>
+    </div>
+    <div class="col-md-1 text-right">
+      <button class="btn btn-secondary" type="submit">Delete post</button>
+    </div>
+      <% } %> <% }) %>
+  </div>
 
-  <% } else { %>
-  <p><%= el.postContent %></p>
-  <% } %> <% }) %>
+  
+  
+
+  
 </div>
+
 <%- include('partials/footer') -%>
