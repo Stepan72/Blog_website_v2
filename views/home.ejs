@@ -4,7 +4,9 @@
   <h1>Hello</h1>
   <p><%= homeStartingContentEJS %></p>
   <% postsEJS.forEach(el => { %>
-  <h2><%= el.title %></h2>
+  <h2>
+    <%= `${el.title[0].toUpperCase()}${el.title.slice(1,el.title.length)}` %>
+  </h2>
 
   <% if (el.postContent.length>20) { %>
   <p>

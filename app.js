@@ -48,7 +48,7 @@ let postShow;
 app.get("/", function (req, res) {
   Post.find({}, (err, results) => {
     if (!err) {
-      console.log(results);
+      // console.log(results);
       res.render("home", {
         homeStartingContentEJS: homeStartingContent,
         postsEJS: results,
@@ -73,18 +73,10 @@ app.get("/compose", function (req, res) {
   res.render("compose");
 });
 
-// app.post("/compose", function (req, res) {
-//   const postMessage = {
-//     title: req.body.title,
-//     content: req.body.post,
-//   };
-//   posts.push(postMessage);
-//   res.redirect("/");
-// });
 /// Внесение нового поста в dB
 app.post("/compose", function (req, res) {
   const post = new Post({
-    title: req.body.title,
+    title: _.lowerCase(req.body.title),
     postContent: req.body.post,
   });
 
@@ -97,18 +89,31 @@ app.post("/compose", function (req, res) {
 });
 
 //// Routing params!!! автоматом создает
-app.get("/posts/:random", (req, res) => {
-  let insert = _.lowerCase(req.params.random);
-  // console.log(insert);
+// app.get("/posts/:random", (req, res) => {
+//   let insert = _.lowerCase(req.params.random);
+//   console.log(insert);
 
-  posts.forEach((el) => {
-    if (_.lowerCase(el.title) == insert) {
-      // console.log(`Match found`);
-      postShow = insert;
-      res.render(`post`, {
-        postTitleEJS: el.title,
-        postContentEJS: el.content,
-      });
-    }
+//   posts.forEach((el) => {
+//     if (_.lowerCase(el.title) == insert) {
+//       // console.log(`Match found`);
+//       postShow = insert;
+//       res.render(`post`, {
+//         postTitleEJS: el.title,
+//         postContentEJS: el.content,
+//       });
+//     }
+//   });
+// });
+
+app.get("/:random", (req, res) => {
+  let insert = _.lowerCase(req.params.random);
+  console.log(insert);
+
+  Post.find({ title: insert }, (err, result) => {
+    console.log(result);
+    res.render("post", {
+      postTitleEJS: result,
+      postContentEJS: result,
+    });
   });
 });

@@ -1,7 +1,11 @@
 <%- include('partials/header') -%>
 <div class="main">
-  <h1><%= postTitleEJS %></h1>
-  <p><%= postContentEJS %></p>
+  <% postTitleEJS.forEach(el => { %>
+  <h1>
+    <%= `${el.title[0].toUpperCase()}${el.title.slice(1,el.title.length)}` %>
+  </h1>
+  <p><%= el.postContent %></p>
+  <% }) %>
 </div>
 
 <%- include('partials/footer') -%>
