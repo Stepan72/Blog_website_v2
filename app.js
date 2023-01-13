@@ -89,22 +89,6 @@ app.post("/compose", function (req, res) {
 });
 
 //// Routing params!!! автоматом создает
-// app.get("/posts/:random", (req, res) => {
-//   let insert = _.lowerCase(req.params.random);
-//   console.log(insert);
-
-//   posts.forEach((el) => {
-//     if (_.lowerCase(el.title) == insert) {
-//       // console.log(`Match found`);
-//       postShow = insert;
-//       res.render(`post`, {
-//         postTitleEJS: el.title,
-//         postContentEJS: el.content,
-//       });
-//     }
-//   });
-// });
-
 app.get("/:random", (req, res) => {
   let insert = _.lowerCase(req.params.random);
   console.log(insert);
@@ -115,5 +99,16 @@ app.get("/:random", (req, res) => {
       postTitleEJS: result,
       postContentEJS: result,
     });
+  });
+});
+
+app.post("/", (req, res) => {
+  let del = req.body.deleteBtn;
+  console.log(del);
+  Post.findOneAndDelete({ title: del }, (err, result) => {
+    if (!err) {
+      console.log(result);
+      res.redirect("/");
+    }
   });
 });

@@ -50,10 +50,6 @@
   height: 470px;
 }
 
-.btn-form-flex {
-  display: flex;
-}
-.btn-right {
-  display: flex;
-  justify-self: end;
+.redact {
+  padding-top: 50px;
 }

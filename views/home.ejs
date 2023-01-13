@@ -3,7 +3,8 @@
 <div class="main">
   <h1>Hello</h1>
   <p><%= homeStartingContentEJS %></p>
-  <div class="container">
+  <form action="/" method="post">
+  <div class="container" >
     <% postsEJS.forEach(el => { %>
 
     <div class="col-md-10">
@@ -17,18 +18,18 @@
           <a href="/<%=el.title%>">...more</a>
         </p>
     </div>
-    <div class="col-md-1 text-right">
-      <button class="btn btn-secondary" type="submit">Delete post</button>
+    <div class="col-md-1 redact">
+      <button class="btn btn-secondary" type="submit" name="deleteBtn" value="<%=el.title%>">Delete post</button>
     </div>
     <% } else { %>
       <p><%= el.postContent %></p>
     </div>
-    <div class="col-md-1 text-right">
-      <button class="btn btn-secondary" type="submit">Delete post</button>
+    <div class="col-md-1 redact">
+      <button class="btn btn-secondary " type="submit" name="deleteBtn" value="<%=el.title%>">Delete post</button>
     </div>
       <% } %> <% }) %>
   </div>
-
+</form>
   
   
 
